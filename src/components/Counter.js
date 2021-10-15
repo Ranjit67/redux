@@ -21,8 +21,8 @@ const Counter = () => {
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      {allState?.showCounter && (
-        <div className={classes.value}>{allState?.counter}</div>
+      {allState?.counter.showCounter && (
+        <div className={classes.value}>{allState?.counter.counter}</div>
       )}
       <div>
         <button onClick={increment}>Increment</button>

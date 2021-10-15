@@ -1,5 +1,5 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-const redux = require("redux");
+// const redux = require("redux");
 // import redux from "redux";
 const initialState = {
   counter: 0,
@@ -10,7 +10,6 @@ const sliceCreate = createSlice({
   initialState,
   reducers: {
     increment(state, action) {
-      console.log(action);
       state.counter = state.counter + action.payload.amount;
     },
     decrement(state) {
@@ -22,7 +21,21 @@ const sliceCreate = createSlice({
     },
   },
 });
-
+const authInitiator = {
+  auth: false,
+};
+const authSlice = createSlice({
+  name: "Auth",
+  initialState: authInitiator,
+  reducers: {
+    login(state) {
+      state.auth = true;
+    },
+    logOut(state) {
+      state.auth = false;
+    },
+  },
+});
 // const reducer = (
 //   state = {
 //     counter: 0,
@@ -57,9 +70,9 @@ const sliceCreate = createSlice({
 // };
 
 const store = configureStore({
-  reducer: sliceCreate.reducer,
+  reducer: { counter: sliceCreate.reducer, auth: authSlice.reducer },
 });
 // const store = redux.createStore(reducer);
 const counterAction = sliceCreate.actions;
-
-export { store, counterAction };
+const authAction = authSlice.actions;
+export { store, counterAction, authAction };
