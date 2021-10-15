@@ -1,29 +1,65 @@
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 const redux = require("redux");
 // import redux from "redux";
-
-const reducer = (
-  state = {
-    counter: 0,
-  },
-  action
-) => {
-  switch (action.type) {
-    case "increment":
-      return {
-        counter: state?.counter + 1,
-      };
-
-    case "decrement":
-      return {
-        counter: state?.counter - 1,
-      };
-
-    default:
-      return {
-        counter: state?.counter,
-      };
-  }
+const initialState = {
+  counter: 0,
+  showCounter: true,
 };
-const store = redux.createStore(reducer);
+const sliceCreate = createSlice({
+  name: "container",
+  initialState,
+  reducers: {
+    increment(state, action) {
+      console.log(action);
+      state.counter = state.counter + action.payload.amount;
+    },
+    decrement(state) {
+      state.counter--;
+    },
 
-export { store };
+    toggle(state) {
+      state.showCounter = !state.showCounter;
+    },
+  },
+});
+
+// const reducer = (
+//   state = {
+//     counter: 0,
+//     showCounter: true,
+//   },
+//   action
+// ) => {
+//   switch (action.type) {
+//     case "increment":
+//       return {
+//         counter: state?.counter + action.amount,
+//         showCounter: state?.showCounter,
+//       };
+
+//     case "decrement":
+//       return {
+//         counter: state?.counter - 1,
+//         showCounter: state?.showCounter,
+//       };
+//     case "toggle":
+//       return {
+//         counter: state?.counter,
+//         showCounter: !state?.showCounter,
+//       };
+
+//     default:
+//       return {
+//         counter: state?.counter,
+//         showCounter: state?.showCounter,
+//       };
+//   }
+// };
+
+const store = configureStore({
+  reducer: sliceCreate.reducer,
+});
+// const store = redux.createStore(reducer);
+const counterAction = sliceCreate.actions;
+
+export { store, counterAction };
